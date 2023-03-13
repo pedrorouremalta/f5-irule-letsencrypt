@@ -1,4 +1,4 @@
-# f5-irule-letsencrypt-challenge-deploy
+# f5-irule-letsencrypt
 ## Overview
 
 An *iRule/iRule LX* which can be used to **deploy** and **expose** an HTTP-01 acme challenge in order to facilitate the generation of *Lets Encrypt* certificates.
