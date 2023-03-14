@@ -40,7 +40,7 @@ when HTTP_REQUEST {
             return
         }
         
-        # Return a 403 (Forbidden) if the Client IP not allowed
+        # Return a 403 (Forbidden) if the Client IP is not allowed
         if { !([class match [getfield $clientip "%" 1] equals "/Common/dg-letsencrypt-api-allowed-ips"]) } {
         
             if { $static::debug } {
@@ -65,7 +65,7 @@ when HTTP_REQUEST {
         
         set letsencryptApi 1
         
-    } elseif { [HTTP::uri] starts_with "/.well-known/acme-challenge/" } {
+    } elseif { $uri starts_with "/.well-known/acme-challenge/" } {
     
         set filename [URI::basename [HTTP::uri]]
         set content [ table lookup -subtable "acme-challenges" -notouch $filename]
@@ -100,7 +100,7 @@ when HTTP_REQUEST_DATA {
 
         if { [catch {ILX::call $handle jsonPost [HTTP::payload]} result] } {
  
-            log local0.error  "Client - [IP::client_addr], ILX failure: $result"
+            log local0.error  "Client - $clientip, ILX failure: $result"
             HTTP::respond 400 content "There has been an error"
             return
       
